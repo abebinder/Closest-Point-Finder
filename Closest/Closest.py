@@ -16,7 +16,9 @@ def solveClosestPoints(l):
                 if(t<0):
                     continue
                 try:
-                    j_list=dict.get(s,t)
+                    j_list=dict.get((s,t))
+                    if(j_list==None):
+                        raise(ZeroDivisionError)
                     for j in j_list:
                         dist=distance(l[i],l[j])
                         if(dist<delta):
@@ -26,10 +28,10 @@ def solveClosestPoints(l):
                 except:
                     pass
 
-            if(cell in dict):
-                dict[cell].append(i)
-            else:
-                dict[cell]=[i]
+        if(cell in dict):
+            dict[cell].append(i)
+        else:
+            dict[cell]=[i]
     return (delta,top_pair)
 
 
