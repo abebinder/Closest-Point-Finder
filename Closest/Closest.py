@@ -7,6 +7,7 @@ def solveClosestPoints(l):
     top_pair=(l[0],l[1])
     if(delta==0.0):
         return(delta,top_pair)
+
     dict=MakeDictionary(l,delta,0)
     for i in range(0,len(l)):
         cell=whatCellAmIIn(l[i],delta)
