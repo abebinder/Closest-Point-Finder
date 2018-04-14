@@ -1,10 +1,12 @@
 import random, math
-random.seed(2)
+import matplotlib.pyplot as plt
+
+random.seed(10)
 
 def solveClosestPoints(l):
     random.shuffle(l)
     delta=distance(l[0],l[1])
-    top_pair=(l[0],l[1])
+    top_pair=(0,1)
     if(delta==0.0):
         return(delta,top_pair)
 
@@ -22,7 +24,7 @@ def solveClosestPoints(l):
                     if(dist<delta):
                         changed=True
                         delta=dist
-                        top_pair=(l[i],l[j])
+                        top_pair=(i,j)
                         if(delta==0.0):
                             return(delta,top_pair)
                 if(changed):
@@ -63,14 +65,38 @@ def distance(p0, p1):
 
 def randominputgenerator(n):
     items_list=[]
-    for i in range(1,n+1):
-        a=random.randint(1,n**2)
-        b=random.randint(1,n**2)
+    for i in range(n):
+        a=random.random()
+        b=random.random()
         items_list.append((a,b))
     return (items_list)
 
-l=[(4,3),(1,1),(2,2),(4,4),(4,4)]
-for i in range(0,5):
-    l=randominputgenerator(4)
-    print(l)
+def visualize(items_list):
+    N = len(items_list)
+    datax = [item[0] for item in items_list]
+    datay = [item[1] for item in items_list]
+
+    #print data[:, 0]
+    #print data
+    labels = ['{0}'.format(i) for i in range(N)]
+
+    plt.subplots_adjust(bottom = 0.1)
+    plt.scatter(
+        datax, datay, #data[:, 0], data[:, 1],
+        cmap=plt.get_cmap('Spectral'))
+
+    for label, x, y in zip(labels, datax, datay):
+        plt.annotate(
+            label,
+            xy=(x, y), xytext=(-10, 20),
+            textcoords='offset points', ha='right', va='bottom',
+            bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
+            arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0')
+        )
+
+    plt.show()
+
+if __name__ == '__main__':
+    l=randominputgenerator(10)
     print(solveClosestPoints(l))
+    visualize(l)
