@@ -97,6 +97,6 @@ def visualize(items_list):
     plt.show()
 
 if __name__ == '__main__':
-    l=randominputgenerator(10)
+    l=randominputgenerator(12)
     print(solveClosestPoints(l))
     visualize(l)
