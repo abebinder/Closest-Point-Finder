@@ -1,32 +1,33 @@
 import random, math
-random.seed(1)
+random.seed(2)
+
 def solveClosestPoints(l):
     random.shuffle(l)
-    print(l)
     delta=distance(l[0],l[1])
-    print(delta)
     top_pair=(l[0],l[1])
+    if(delta==0.0):
+        return(delta,top_pair)
     dict=MakeDictionary(l,delta,0)
     for i in range(0,len(l)):
         cell=whatCellAmIIn(l[i],delta)
         for s in range(cell[0]-2, cell[0]+3):
-            if(s<0):
-                continue
             for t in range(cell[1]-2, cell[1]+3):
-                if(t<0):
+                j_list=dict.get((s,t))
+                if(j_list==None):
                     continue
-                try:
-                    j_list=dict.get((s,t))
-                    if(j_list==None):
-                        raise(ZeroDivisionError)
-                    for j in j_list:
-                        dist=distance(l[i],l[j])
-                        if(dist<delta):
-                            delta=dist
-                            top_pair=(l[i],l[j])
-                            dict=MakeDictionary(l,delta,i)
-                except:
-                    pass
+                changed=False
+                for j in j_list:
+                    dist=distance(l[i],l[j])
+                    if(dist<delta):
+                        changed=True
+                        delta=dist
+                        top_pair=(l[i],l[j])
+                        if(delta==0.0):
+                            return(delta,top_pair)
+                if(changed):
+                    dict=MakeDictionary(l,delta,i)
+                    cell=whatCellAmIIn(l[i], delta)
+
 
         if(cell in dict):
             dict[cell].append(i)
@@ -58,6 +59,17 @@ def distance(p0, p1):
     return math.sqrt((p0[0] - p1[0])**2 + (p0[1] - p1[1])**2)
 
 
-l=[(.2,.2),(.2,.3),(.5,.5),(.7,1),(1,5),(4,3)]
 
-print(solveClosestPoints(l))
+def randominputgenerator(n):
+    items_list=[]
+    for i in range(1,n+1):
+        a=random.randint(1,n**2)
+        b=random.randint(1,n**2)
+        items_list.append((a,b))
+    return (items_list)
+
+l=[(4,3),(1,1),(2,2),(4,4),(4,4)]
+for i in range(0,5):
+    l=randominputgenerator(4)
+    print(l)
+    print(solveClosestPoints(l))
