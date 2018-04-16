@@ -18,6 +18,11 @@ def solveClosestPoints(l):
                 j_list=dict.get((s,t))
                 if(j_list==None):
                     continue
+                print( j_list )
+                # if(len(j_list)>1):
+                #     print ("F")
+                # else:
+                #     print("T")
                 changed=False
                 for j in j_list:
                     dist=distance(l[i],l[j])
@@ -98,5 +103,7 @@ def visualize(items_list):
 
 if __name__ == '__main__':
     l=randominputgenerator(12)
+    #print(l)
+    #print("\n\n")
     print(solveClosestPoints(l))
     visualize(l)
