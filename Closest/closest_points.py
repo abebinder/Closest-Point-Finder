@@ -1,14 +1,14 @@
 import math
 import random
 import matplotlib.pyplot as plt
-random.seed(11)
+# random.seed(100)
 
 
 def solve(P):
     closest_pair = (0, 1)
     delta = get_distance(P[0], P[1])
-    if(delta==0.0):
-        return (delta,closest_pair)
+    if(delta == 0.0):
+        return ( delta, closest_pair )
     subsquare_to_points_mapping = {}
     subsquare_to_points_mapping[ get_subsquare_of_point( P[0], delta ) ] = 0
     subsquare_to_points_mapping[ get_subsquare_of_point( P[1], delta ) ] = 1
@@ -29,8 +29,8 @@ def solve(P):
                     new_closest_pair_found = True
                     delta = distance
                     closest_pair = ( i,point_in_subsquare )
-                    if(delta==0.0):
-                        return(delta,closest_pair)
+                    if(delta == 0.0):
+                        return( delta, closest_pair )
 
         if new_closest_pair_found:
             subsquare_to_points_mapping = make_dictionairy( P, delta, i )
@@ -65,14 +65,11 @@ def visualize(items_list):
     N = len(items_list)
     datax = [item[0] for item in items_list]
     datay = [item[1] for item in items_list]
-
-    #print data[:, 0]
-    #print data
     labels = ['{0}'.format(i) for i in range(N)]
 
     plt.subplots_adjust(bottom = 0.1)
     plt.scatter(
-        datax, datay, #data[:, 0], data[:, 1],
+        datax, datay,
         cmap=plt.get_cmap('Spectral'))
 
     for label, x, y in zip(labels, datax, datay):
@@ -93,9 +90,3 @@ def generate_points( n ):
         y = random.random()
         points.append( ( x, y ) )
     return points
-
-
-if __name__ == '__main__':
-    P = generate_points(12)
-    print( solve(P) )
-    visualize(P)

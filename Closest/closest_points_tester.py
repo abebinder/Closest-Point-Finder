@@ -2,9 +2,17 @@ import matplotlib.pyplot as plt
 import closest_points
 import time
 import random
-random.seed(1)
+random.seed(4)
 
 
+# test for correctness
+P = closest_points.generate_points(12)
+print( closest_points.solve(P) )
+closest_points.visualize(P)
+
+exit() # remove this if you wanna see time complexity graph
+
+# test time complexity
 
 ns = []
 times = []
@@ -16,16 +24,13 @@ for i in range( min_i, max_i ):
     n = int( n_base ** i )
     ns.append( n )
 
-    sum = 0
-    for j in range(10):
-        points = closest_point.generate_points( n )
-        t1 = time.time()
-        ( distance, pair ) = closest_points.solve( points )
-        t2 = time.time()
-        td = t2 - t1
-        print( "%d %d %s" % ( i, n, td ) )
-        sum += td
-    times.append( sum/10 )
+    points = closest_points.generate_points( n )
+    t1 = time.time()
+    ( distance, pair ) = closest_points.solve( points )
+    t2 = time.time()
+    td = t2 - t1
+    print( "%d %d %s" % ( i, n, td ) )
+    times.append( td )
 
 plt.plot( ns, times )
 
@@ -35,6 +40,5 @@ plt.xlabel('input size')
 plt.ylabel('time (s)')
 plt.title( 'Closest Points solver' )
 plt.grid(True)
-# plt.legend()
 plt.savefig( "closest_points.png")
 plt.show()
